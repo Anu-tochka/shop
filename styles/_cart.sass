@@ -1,0 +1,89 @@
+.cart-content
+    padding-top: 96px
+    +onthesides()
+
+.cart-product
+    width: 657px
+
+.card
+    display: flex
+    background-color: #fff
+    filter: drop-shadow(17px 19px 24px rgba(0, 0, 0, 0.13))
+    &_mb
+        margin-bottom: 40px
+    &__heading
+        font-size: 24px
+        line-height: 29px
+        color: $colorHeading
+        width: 262px
+    &__content
+        padding: 22px 22px 31px 31px
+
+.shipping
+    width: 360px
+    &__heading
+        +heading()
+        color: $colorHeading
+    &__input
+        width: 100%
+        border: $border
+        color: #B1B1B1
+        padding: 12px 17px 15px
+        font-weight: 300
+        font-size: 13px
+        line-height: 16px
+        margin-top: 21px
+    &__button
+        border: $border
+        color: #4A4A4A
+        padding: 10px 15px 12px
+        font-weight: 300
+        font-size: 11px
+        line-height: 13px
+        margin-top: 24px
+        background-color: #fff
+        transition: all 0.3s
+.checkout
+    width: 360px
+    height: 214px
+    background-color: #F5F3F3
+    margin-top: 40px
+    padding: 40px 43px 42px
+    color: #4A4A4A
+    &__total
+        display: flex
+        flex-direction: column
+        align-items: flex-end
+        span
+            margin-left: 24px
+    &__button
+        color: #FFF
+        width: 273px
+        height: 50px
+        text-align: center
+        background-color: $colorSelect
+        transition: all 0.3s
+        padding: 15px 41px 16px
+    &__line
+        color: #E2E2E2
+        margin: 21px 0px 17px
+	
+.subtotal
+    float: right
+    font-weight: 400
+    font-size: 11px
+    line-height: 13px
+    margin-bottom: 12px
+	
+.grandtotal
+    float: right
+    +heading()
+    color: $colorHeading
+    &__sum
+        color: #F26376
+
+.buttons
+    padding-top: 72px
+    padding-bottom: 128px
+    +onthesides()
+    transition: all 0.3s
