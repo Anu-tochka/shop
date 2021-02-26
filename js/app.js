@@ -5,18 +5,17 @@ class List {
 
   constructor () {
     // Забираем массив со свойствами товаров, на основе которых будем создавать объекты товароы
-    let goods = this.fetchGoods()
+    let goods = this.fetchGoods().then(function() {
+		goods = goods.map(cur => {
+		  return new GoodItem(cur)
+		})
 
-    // трансформируем наш массив со свойствами в массив с объектами
-    goods = goods.map(cur => {
-      return new GoodItem(cur)
-    })
+		// поштучно добавляем объекты в наш список
+		this._items.push(...goods)
 
-    // поштучно добавляем объекты в наш список
-    this._items.push(...goods)
-
-    // запускаем рендер
-    this.render()
+		// запускаем рендер
+		this.render.bind(this)
+	})
   }
 
   /**
@@ -24,14 +23,14 @@ class List {
    * Возвращает свойства, на основании которых будут создаваться объекты
    **/ 
   fetchGoods () {
-    return [
-      { name: 'Coat', price: 1500, alt: 'photo product', img: "img/goods1.png" },
-      { name: 'Jacket', price: 1900, alt: 'photo product', img: "img/goods2.png" },
-      { name: 'Hoodie', price: 1500, alt: 'photo product', img: "img/goods3.png" },
-      { name: 'T-Shirt', price: 1000, alt: 'photo product', img: "img/goods4.png" },
-      { name: 'Jacket', price: 5000, alt: 'photo product', img: "img/goods5.png" },
-      { name: 'Polo', price: 1500, alt: 'photo product', img: "img/goods6.png" },
-    ]
+    let goodsPromise = new Promise(function(resolve, reject) {
+		fetch('http://localhost:3000/database/data.json')
+	});
+	
+    goodsPromise.finally(() => console.log("Промис"))
+    goodsPromise.then(
+	  result => result.json()
+	);
   }
 
   render () {
