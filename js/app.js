@@ -1,7 +1,7 @@
 'use strict';
 
 class List {
-  items = []
+  _items = []
 
   constructor () {
     // Забираем массив со свойствами товаров, на основе которых будем создавать объекты товароы
@@ -13,7 +13,7 @@ class List {
     })
 
     // поштучно добавляем объекты в наш список
-    this.items.push(...goods)
+    this._items.push(...goods)
 
     // запускаем рендер
     this.render()
@@ -37,24 +37,24 @@ class List {
   render () {
     // В this.items у нас хранятся объекты GoodItem
     // Проходимся по каждому такому объекту и вызываем у него метод рендера (каждая карточка товара рендерит сама себя)
-    this.items.forEach(good => {
+    this._items.forEach(good => {
       good.render()
     })
   }
 }
 
 class GoodItem {
-  name = ''
-  price = 0
-  alt = ''
-  img = 'img/goods1.png'
+  _name = ''
+  _price = 0
+  _alt = ''
+  _img = 'img/goods1.png'
 
-  // в аргументах применена деструктуризация (ссылка на статью ниже)
+  // в аргументах применена деструктуризация
   constructor ({ name, price, alt, img }) {
-    this.name = name
-    this.price = price
-    this.alt = alt
-    this.img = img
+    this._name = name
+    this._price = price
+    this._alt = alt
+    this._img = img
   }
   
   render () {
@@ -63,19 +63,19 @@ class GoodItem {
     if (placeToRender) {
       // создаем блок, в который помещаем информацию о товаре
       const block = document.createElement('div')
-      block.innerHTML = `<div class="product product_mb">
-                <a href="product.html">
-                    <img class="product__img" src="${this.img}" alt="${this.alt}">
+	  block.classList.add('product')
+	  block.classList.add('product_mb')
+      block.innerHTML = `<a href="product.html">
+                    <img class="product__img" src="${this._img}" alt="${this._alt}">
                 </a>
                 <a class="product__add" href="#">
                     <img src="img/product-cart.svg" alt="cart"> Add to Cart
                 </a>
                 <div class="product__info">
-                    <a href="product.html" class="product__name"> ${this.name} </a>
+                    <a href="product.html" class="product__name"> ${this._name} </a>
                     <p class="product__text">Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.</p>
-                    <div class="product__price">$${this.price}</div>
-                </div>
-            </div>`
+                    <div class="product__price">$${this._price}</div>
+                </div>`
 
       // помещаем созданный блок на страницу
       placeToRender.appendChild(block)
@@ -83,23 +83,84 @@ class GoodItem {
   }
 }
 
-const ListInstance = new List()
-//
-/*
-const textAdd = 'Товар добавлен в корзину';
+class Cart {
+    _items = []
 
-document.addEventListener('DOMContentLoaded', function() {
-        let add = document.querySelectorAll('.product__add');
-		add.forEach(function(item) {
-			item.addEventListener('click', clickHandler);
-		});
-    });
+  constructor () {
+    // Забираем массив выбраннх товаров
+    let goods = this.cartGoods()
 
-/**
- * Обработчик клика 
- * @param {MouseEvent} event 
- */
-function clickHandler(event) {
-    alert(textAdd);
+    // трансформируем наш массив со свойствами в массив с объектами
+    goods = goods.map(cur => {
+      return new CartItem(cur)
+    })
+
+    // поштучно добавляем объекты в наш список
+    this._items.push(...goods)
+
+    // запускаем рендер
+    this.render()
+  }
+
+  /**
+   * Заглушка - имитатор запроса на сервер
+   * Возвращает свойства, на основании которых будут создаваться объекты
+   **/ 
+  cartGoods () {
+    return [
+      { name: 'MANGO  PEOPLE  T-SHIRT', price: 500, alt: 'photo product', img: "img/card__img.jpg", quantity: 1 },
+      { name: 'MANGO  PEOPLE  T-SHIRT', price: 550, alt: 'photo product', img: "card__img.jpg", quantity: 1 },
+    ]
+  }
+
+  render () {
+    // В this.items у нас хранятся объекты CartItem
+    // Проходимся по каждому такому объекту и вызываем у него метод рендера (каждая карточка товара рендерит сама себя)
+    this._items.forEach(good => {
+      good.render()
+    })
+  }
 }
+
+class CartItem {
+  _name = ''
+  _price = 0
+  _alt = ''
+  _img = 'img/goods1.png'
+  quantity = 1
+
+  // в аргументах применена деструктуризация
+  constructor ({ name, price, alt, img, quantity }) {
+    this._name = name
+    this._price = price
+    this._alt = alt
+    this._img = img
+    this._quantity = quantity
+  }
+  
+  render () {
+    // находим место куда рендерить
+    const placeToRender = document.querySelector('.cart-product')
+    if (placeToRender) {
+      // создаем блок, в который помещаем информацию о товаре
+      const block = document.createElement('div')
+	  block.classList.add('card')
+	  block.classList.add('card_mb')
+      block.innerHTML = `<img class="card__img" src="${this._img}" alt="${this._alt}">
+                <div class="card__content">
+                    <h3 class="card__heading">${this._name}</h3>
+                    <p class="card__text">Price: $${this._price}</p>
+                    <p class="card__text">Color: Red</p>
+                    <p class="card__text">Size: Xl	</p>
+                    <p class="card__text">Quantity:	<input type="number" min="1" max="5" value="${this._quantity}"></p>
+                </div>`
+
+      // помещаем созданный блок на страницу
+      placeToRender.appendChild(block)
+    }
+  }
+}
+const CartInstance = new Cart()
+//new List(CartInstance)
+const ListInstance = new List()
 
