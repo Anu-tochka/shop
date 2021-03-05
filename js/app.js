@@ -2,20 +2,31 @@
 
 class List {
   _items = []
+  preloading = false;
 
-  constructor () {
+  constructor (CartInstance) {
     // Забираем массив со свойствами товаров, на основе которых будем создавать объекты товароы
-    let goods = this.fetchGoods().then(function() {
+    this.fetchGoods()
+		.then( res => {
+			return res.json()
+		})
+		.then( data => {
+			this.preloading = false
+			const goods = data.data.map(cur => {
+			  return new GoodItem(cur, CartInstance)
+			})
+			this._items = [...goods]
+			return this._items
+		})
 		goods = goods.map(cur => {
 		  return new GoodItem(cur)
 		})
 
-		// поштучно добавляем объекты в наш список
-		this._items.push(...goods)
+		/*
+		this._items.push(...goods) */
 
 		// запускаем рендер
-		this.render.bind(this)
-	})
+		.then(this.render.bind(this));
   }
 
   /**
@@ -23,16 +34,10 @@ class List {
    * Возвращает свойства, на основании которых будут создаваться объекты
    **/ 
   fetchGoods () {
-    let goodsPromise = new Promise(function(resolve, reject) {
-		fetch('http://localhost:3000/database/data.json')
-	});
+    this.preloading = true
+	return fetch('http://localhost:3000/database/data.json')
+   };
 	
-    goodsPromise.finally(() => console.log("Промис"))
-    goodsPromise.then(
-	  result => result.json()
-	);
-  }
-
   render () {
     // В this.items у нас хранятся объекты GoodItem
     // Проходимся по каждому такому объекту и вызываем у него метод рендера (каждая карточка товара рендерит сама себя)
@@ -47,13 +52,19 @@ class GoodItem {
   _price = 0
   _alt = ''
   _img = 'img/goods1.png'
+  _CartInstance = null
 
   // в аргументах применена деструктуризация
-  constructor ({ name, price, alt, img }) {
+  constructor ({ name, price, alt, img }, CartInstance) {
     this._name = name
     this._price = price
     this._alt = alt
     this._img = img
+	this._CartInstance = CartInstance
+  }
+  
+  addToCart () {
+	this._CartInstance.add(this)  
   }
   
   render () {
@@ -83,8 +94,29 @@ class GoodItem {
 }
 
 class Cart {
-    _items = []
-
+    _items = [/* CartItem */]
+	
+	add(CartItemInstance){
+		const FoundItem = this._items.find((CartItem) => {
+			return CartItem._name === GoodItemInstance._name
+		})
+		
+		if (FoundItem){
+			FoundItem.counter++
+		} else {
+			this._items.push(new cartItem({
+			  name: GoodItemInstance._name,
+			  price: GoodItemInstance._price,
+			  alt: GoodItemInstance._alt,
+			  img: GoodItemInstance._img,
+			  quantity: GoodItemInstance._quantity,
+			}))
+		}
+		
+		this.render()
+	//	this._items
+	}
+/*
   constructor () {
     // Забираем массив выбраннх товаров
     let goods = this.cartGoods()
@@ -93,32 +125,26 @@ class Cart {
     goods = goods.map(cur => {
       return new CartItem(cur)
     })
+*/
+    render() {
+		const placeToRender = document.querySelector('.cart-product')
+		if (placeToRender) {
+			placeToRender.innerHTML = ''
+		}
+		this._items.forEach(CartItemInstance => {
+		  CartItemInstance.render()
+		})
+		
+	}
 
-    // поштучно добавляем объекты в наш список
-    this._items.push(...goods)
-
-    // запускаем рендер
-    this.render()
-  }
-
-  /**
-   * Заглушка - имитатор запроса на сервер
-   * Возвращает свойства, на основании которых будут создаваться объекты
-   **/ 
-  cartGoods () {
+  /*
+  cartItem () {
     return [
       { name: 'MANGO  PEOPLE  T-SHIRT', price: 500, alt: 'photo product', img: "img/card__img.jpg", quantity: 1 },
       { name: 'MANGO  PEOPLE  T-SHIRT', price: 550, alt: 'photo product', img: "card__img.jpg", quantity: 1 },
     ]
   }
-
-  render () {
-    // В this.items у нас хранятся объекты CartItem
-    // Проходимся по каждому такому объекту и вызываем у него метод рендера (каждая карточка товара рендерит сама себя)
-    this._items.forEach(good => {
-      good.render()
-    })
-  }
+*/
 }
 
 class CartItem {
@@ -126,7 +152,7 @@ class CartItem {
   _price = 0
   _alt = ''
   _img = 'img/goods1.png'
-  quantity = 1
+  _quantity = 1
 
   // в аргументах применена деструктуризация
   constructor ({ name, price, alt, img, quantity }) {
@@ -160,6 +186,6 @@ class CartItem {
   }
 }
 const CartInstance = new Cart()
-//new List(CartInstance)
-const ListInstance = new List()
+new List(CartInstance)
+//const ListInstance = new List()
 

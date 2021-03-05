@@ -1,6 +1,6 @@
-{{ name: 'Coat', price: 1500, alt: 'photo product', img: "img/goods1.png" },
-      { name: 'Jacket', price: 1900, alt: 'photo product', img: "img/goods2.png" },
-      { name: 'Hoodie', price: 1500, alt: 'photo product', img: "img/goods3.png" },
-      { name: 'T-Shirt', price: 1000, alt: 'photo product', img: "img/goods4.png" },
-      { name: 'Jacket', price: 5000, alt: 'photo product', img: "img/goods5.png" },
-      { name: 'Polo', price: 1500, alt: 'photo product', img: "img/goods6.png" }}
+[{ "name": "Coat", "price": 1500, "alt": "photo product", "img": "img/goods1.png" },
+      { "name": "Jacket", "price": 1900, "alt": "photo product", "img": "img/goods2.png" },
+      { "name": "Hoodie", "price": 1500, "alt": "photo product", "img": "img/goods3.png" },
+      { "name": "T-Shirt", "price": 1000, "alt": "photo product", "img": "img/goods4.png" },
+      { "name": "Jacket", "price": 5000, "alt": "photo product", "img": "img/goods5.png" },
+      { "name": "Polo", "price": 1500, "alt": "photo product", "img": "img/goods6.png" }]
