@@ -8,8 +8,8 @@ class List {
 
   constructor (CartInstance) {
     this._CartInstance = CartInstance
-	// Забираем массив со свойствами товаров, на основе которых будем создавать объекты товары
-    this.fetchGoods()
+    let goods =  this.fetchGoods() 
+    this._items =  goods
   }
   
   fetchGoods () {
