@@ -29,25 +29,24 @@ class List {
   
   fetchGoods () {
     this.preloading = true
-	return fetch('http://localhost:3000/database/data.json')
-	.then( res => {
+	  return fetch('http://localhost:3000/database/data.json')
+	  .then( res => {
 			return res.json()
 		})
 		.then( data => {
 			this.preloading = false
-			let goods = data.map(cur => {
+			let goods = data.data.map(cur => {
 			  return new GoodItem(cur, CartInstance)
 			})
-			this._items = [...goods]
-			return this._items
+      
 		})
-		
+		.then(this.render.bind(this)); /*
+			.then(
+        this._items = [...goods]
+			return this._items */
 
 		/*
 		this._items.push(...goods) */
-
-		// запускаем рендер
-		.then(this.render.bind(this));
 
   
    };

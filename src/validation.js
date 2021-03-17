@@ -18,8 +18,11 @@ function asErr(inputs) {
 	if (!jsname.value.test('/\D+/')) {
 		jsname.style.borderColor = 'red';
 	}
-	if (!jsphone.value.test('//+7/(\d{3}/d{3}-d{4})/')) {
+	if (!jsphone.value.test('/^\+7\(\d{3}\)\d{3}-d{4}$/')) {
 		jsphone.style.borderColor = 'red';
+	}
+	if (!jsemail.value.test('/^\w\.?-?\w?@[a-z]+\.\w{2,4}$/')) {
+		jsemail.style.borderColor = 'red';
 	}
 }   
 

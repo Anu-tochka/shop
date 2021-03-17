@@ -20,7 +20,7 @@ class List {
 		})
 		.then( data => {
 			this.preloading = false
-			let goods = data.map(cur => {
+			let goods = data.data.map(cur => {
 			  return new GoodItem(cur, CartInstance)
 			})
 			this._items = [...goods]
