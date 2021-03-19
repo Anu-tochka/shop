@@ -1,6 +1,7 @@
 'use strict';
 <template>
-  <div :class="[$style.cart-product]" v-for="item in items">
+  <div :class="[$style.cart-product]" v-for="item in items"> 
+       <CartItem v-for="item in items">
         <div :class="[buttons]">
             <button :class="[$style.shipping__button]">CLEAR SHOPPING CART</button>
             <button :class="[$style.shipping__button]">CONTINUE SHOPPING</button>

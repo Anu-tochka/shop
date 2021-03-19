@@ -1,7 +1,7 @@
 'use strict';
 <template>
-  <div :class="[$style.product-content]" v-for="item in items"> 
-       
+  <div :class="[$style.product-content]"> 
+       <CatalogItem v-for="item in items">
     </div>
 </template>
 
