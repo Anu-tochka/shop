@@ -1,10 +1,10 @@
 'use strict';
 <template>
-    <body>
+    <div>
         <Header>
         
         <MainBlock>
-    </body>
+    </div>
 </template>
 
 <script>

@@ -1,6 +1,6 @@
 'use strict';
 <template>
-  <header :class="[$style.cart-product]">
+  <header :class="[$style.header] [$style.center]">
         <div class="header__left">
             <a href="index.html"><img src="img/logo.svg" alt="logo"></a>
             <a href="#"><img class="header__search" src="img/search.svg" alt="search"></a>
@@ -18,16 +18,26 @@
             <div class="header__box">
                 <img class="header__accoutn" src="img/account.svg" alt="account">
                 <img src="img/cart.svg" alt="cart">
+                {{ quantity }}
             </div>
         </div>
     </header>
 </template>
 
 <script>
-
+export default {
+  props: {
+    quantity: Number
+  }
+}
 </script>
 
 <style module>
+
+.center {
+  padding-left: calc(50% - 570px);
+  padding-right: calc(50% - 570px); }
+
 .header {
   background-color: #222;
   height: 75px;

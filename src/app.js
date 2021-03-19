@@ -8,11 +8,9 @@ new List(CartInstance)
 */
 new Vue({
   el: '.product-content',
-  template: '<GoodItem />',
+  template: '<App />',
   components: {
-    GoodItem,
+    App,
   },
-  data: {
-    message: 'Вы загрузили эту страницу: ' + new Date().toLocaleString()
-  }
+  
 })
