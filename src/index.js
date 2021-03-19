@@ -10,10 +10,10 @@ const server = http.createServer( function(req, res) {
 		if (isSVG) {
 			res.setHeader('Content-Type', 'image/svg+xml');
 		}
-		body = fs.readFileSync(req.url.slice(1), 'utf8')
+		body = fs.readFileSync(req.url.slice(1))
 	} catch(err) {
 	//	str.slice(start [, end])
-		body = fs.readFileSync('index.html', 'utf8')
+		body = fs.readFileSync('index.html')
 	}
 		console.log(req.url);
 	
