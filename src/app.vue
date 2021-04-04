@@ -9,9 +9,11 @@
 
 <script>
 import Header from 'header.vue'
+import Catalog from 'Catalog.vue'
 export default {
     components: {
-        Header
+        Header,
+        Catalog
     }
 }
 </script>
