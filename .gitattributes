@@ -1,4 +1,4 @@
-*.txt lf
-*.js lf
-*.json lf
-*.md lf
+*.txt crlf
+*.js crlf
+*.json crlf
+*.md crlf

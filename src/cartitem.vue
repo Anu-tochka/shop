@@ -1,7 +1,7 @@
 'use strict';
 <template>
   <div :class="[$style.card] [$style.card_mb]">
-       <img  :class="[card__img]" src="{{img}}" alt="{{alt}}">
+       <img  :class="[card__img]" v-bind:src="{{img}}" v-bind:alt="{{alt}}">
                 <div  :class="[card__content]">
                     <h3  :class="[card__heading]">{{name}}</h3>
                     <p  :class="[card__text]">Price: ${{price}}</p>

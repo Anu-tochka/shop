@@ -1,12 +1,46 @@
 'use strict';
 <template>
-  <div :class="[$style.product-content]" v-for="item in items"> 
-       
+  <div :class="[$style.product-content]"> 
+       <CatalogItem v-for="item in items">
     </div>
+    <CartItem
+      v-for="id in getItemsOnPage"
+      :id="id"
+      :key="id"
+    />
+    <Button @clicked="loadMore">Добавить ещё</Button>
 </template>
 
 <script>
-import CatalogItem  from './CatalogItem.vue'
+import CatalogItem  from 'CatalogItem.vue'
+import Button  from 'Button.vue'
+
+export default {
+  components: {
+    CatalogItem,
+    Button
+  },
+  data() {
+    return {
+      page: 0,
+    }
+  }
+  methods: {
+    loadMore() {
+      this.page++
+      this.requestData(this.page)
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'getItemsOnPage',
+      'getFullPrice'
+    ]),
+  },
+  created () {
+    this.requestData(1)
+  }
+}
 
 new Vue({
   el: '.product-content',
